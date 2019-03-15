@@ -13,6 +13,11 @@ See the [kibana contributing guide](https://github.com/elastic/kibana/blob/maste
     Install dependencies and crosslink Kibana and all projects/plugins.
 
     > ***IMPORTANT:*** Use this script instead of `yarn` to install dependencies when switching branches, and re-run it whenever your dependencies change.
+  
+  
+  - `npm i react-flexmonster --save`
+  
+    Add Flexmonster React module 
 
   - `yarn start`
 
