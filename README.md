@@ -1,1 +1,1 @@
-# softtechkibanaplugin
+# Softtech Kibana Plugin
