@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as FlexmonsterReact from 'react-flexmonster';
 
+
+
+
+
 class VisController {
   constructor(el, vis) {
     this.vis = vis;
@@ -21,14 +25,21 @@ class VisController {
     this.container.innerHTML = '';
     //console.log(visData);
 
-
+    
+	
     var columnsId =[];
     var columnsName =[];
     var flexTable = [];
 	var flexRow = [{ uniqueName: "[Measures]" }];
 	var flexColumn = [];
 	var flexMeasures = [];
+    
+	var tColumnChecked = `${this.vis.params.tColumnChecked}`;
+	var tRowChecked = `${this.vis.params.tRowChecked}`;
+	console.log(tColumnChecked)
+	console.log(tRowChecked)
 
+	
 
     for (var i = 0; i < visData["columns"].length; i++) {
 	  var clm = visData["columns"][i]
@@ -77,6 +88,12 @@ class VisController {
 		dataSource: {
 			data: flexTable
 		},
+		options: {
+			grid: {
+				showGrandTotals: ((tColumnChecked == "true" && tRowChecked == "true")?"true":(tColumnChecked == "true"?"columns":(tRowChecked == "rows":"false")))
+			}
+        }
+		,
 		formats: [
 			{
 				name: "",
@@ -96,7 +113,8 @@ class VisController {
 	// render flexmonster pivot table
 	if (flexColumn.length > 0 || flexRow.length > 1) { // flexRow.0 holds [Measures] ,  skip that
 		ReactDOM.render(
-			<FlexmonsterReact.Pivot width="100%"   report={report} licenseKey="Z71P-XAB43Y-0F680Y-6O4F3E" />,
+			<FlexmonsterReact.Pivot width="100%"   componentFolder="https://cdn.flexmonster.com/"  report={report} />, 
+			//<FlexmonsterReact.Pivot width="100%"   report={report} licenseKey="Z71P-XAB43Y-0F680Y-6O4F3E" />,
 			document.getElementById(output)
 		);
     }else{
@@ -107,9 +125,9 @@ class VisController {
 };
 
 function getColumnName(clm){
-   if (clm.aggConfig.params.customLabel){
+   if (clm.aggConfig.params && clm.aggConfig.params.customLabel){
      return clm.aggConfig.params.customLabel;
-   }else if (clm.aggConfig._opts.params.field){
+   }else if (clm.aggConfig._opts.params && clm.aggConfig._opts.params.field){
      return clm.aggConfig._opts.params.field;
    }
 }
