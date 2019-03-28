@@ -15,6 +15,9 @@ class VisController {
     this.container.className = 'myvis-container-div';
 	this.container.style = "width:100%;";
     this.el.appendChild(this.container);
+	
+	this.vis.params.tColumnChecked = true;
+	this.vis.params.tRowChecked = true;
   }
 
   destroy() {
@@ -34,10 +37,13 @@ class VisController {
 	var flexColumn = [];
 	var flexMeasures = [];
     
-	var tColumnChecked = `${this.vis.params.tColumnChecked}`;
-	var tRowChecked = `${this.vis.params.tRowChecked}`;
-	console.log(tColumnChecked)
-	console.log(tRowChecked)
+	
+	var tColumnChecked = this.vis.params.tColumnChecked;
+	var tRowChecked = this.vis.params.tRowChecked;
+	var totalDecision = (tColumnChecked && tRowChecked)?"true":(tColumnChecked?"columns":(tRowChecked?"rows":"false"));
+	//console.log(tColumnChecked)
+	//console.log(tRowChecked)
+	//console.log(totalDecision)
 
 	
 
@@ -90,7 +96,7 @@ class VisController {
 		},
 		options: {
 			grid: {
-				showGrandTotals: ((tColumnChecked == "true" && tRowChecked == "true")?"true":(tColumnChecked == "true"?"columns":(tRowChecked == "rows":"false")))
+				showGrandTotals: totalDecision
 			}
         }
 		,
