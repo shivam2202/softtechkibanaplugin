@@ -16,13 +16,18 @@ class VisController {
 	this.container.style = "width:100%;";
     this.el.appendChild(this.container);
 	
-	this.vis.params.tColumnChecked = true;
-	this.vis.params.tRowChecked = true;
+	
+	if ( ! this.vis.getUiState()._mergedState.showGrandTotals) {
+		this.vis.params.tColumnChecked = true;
+	    this.vis.params.tRowChecked = true;
+	}
+	
   }
 
   destroy() {
     this.el.innerHTML = '';
   }
+  
 
   render(visData, status) {
     this.container.innerHTML = '';
@@ -40,11 +45,13 @@ class VisController {
 	
 	var tColumnChecked = this.vis.params.tColumnChecked;
 	var tRowChecked = this.vis.params.tRowChecked;
-	var totalDecision = (tColumnChecked && tRowChecked)?"true":(tColumnChecked?"columns":(tRowChecked?"rows":"false"));
+	this.showGrandTotals = (tColumnChecked && tRowChecked)?"true":(tColumnChecked?"columns":(tRowChecked?"rows":"false"));
+	this.vis.uiStateVal("showGrandTotals", this.showGrandTotals);
 	//console.log(tColumnChecked)
 	//console.log(tRowChecked)
-	//console.log(totalDecision)
+	//console.log(showGrandTotals)
 
+	
 	
 
     for (var i = 0; i < visData["columns"].length; i++) {
@@ -96,7 +103,7 @@ class VisController {
 		},
 		options: {
 			grid: {
-				showGrandTotals: totalDecision
+				showGrandTotals: this.showGrandTotals
 			}
         }
 		,
