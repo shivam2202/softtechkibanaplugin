@@ -1,15 +1,22 @@
-<div class="form-group">
-  <table  class="table">
-    <tr>
-		<th>Totals</th>
-	</tr>
-	<tr>
-	  <td>
-	    <input type="checkbox" ng-model="vis.params.tColumnChecked"  >Show column total<br>
-        <input type="checkbox" ng-model="vis.params.tRowChecked"  >Show row total<br>
-	  </td>	
-	</tr>
-  </table>  
+<div class="visEditorSidebar__config">
+<div class="sidebar-item visEditorAggGroup__wrapper">
 
+ <div class="sidebar-item-title visEditorAggGroup__title">
+		   <label>
+				Totals
+			  </label>	
+		</div>
+ <div class="checkbox">
+		   <label>
+	          <input type="checkbox" ng-model="vis.params.tColumnChecked"  ng-change="vis.updateState()" >Show column total
+		  </label>	  
+		</div>
+ <div class="checkbox">
+		   <label>
+				<input  type="checkbox" ng-model="vis.params.tRowChecked"  ng-change="vis.updateState()">Show row total
+			  </label>	
+		</div>		
+
+</div>
 </div>
 
