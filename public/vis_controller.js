@@ -4,8 +4,6 @@ import * as FlexmonsterReact from 'react-flexmonster';
 
 
 
-
-
 class VisController {
   constructor(el, vis) {
     this.vis = vis;
@@ -145,6 +143,14 @@ function getColumnName(clm){
    }
 }
 
+function getColumnSort(clm){
+   if (clm.aggConfig._opts.params && clm.aggConfig._opts.params.orderBy == "_key"){
+     return clm.aggConfig._opts.params.order;
+   }else{
+     return "unsorted";
+   }
+}
+
 function addMetrics(clm, measures){
 	if (clm.aggConfig._opts.type == "avg"){
 		var tempObj={};
@@ -181,12 +187,14 @@ function addCountMetric(visData, flexRow, flexColumn, flexMeasures){
 function addTerms(clm, flexColumn, flexRow){
     if (clm.aggConfig.__schema.name == "column"){
         var tempObj={};
-		tempObj.uniqueName=getColumnName(clm)
+		tempObj.uniqueName=getColumnName(clm);
+		tempObj.sort=getColumnSort(clm);
 		flexColumn.push(tempObj);
 	}
     if (clm.aggConfig.__schema.name == "row"){
         var tempObj={};
-		tempObj.uniqueName=getColumnName(clm)
+		tempObj.uniqueName=getColumnName(clm);
+		tempObj.sort=getColumnSort(clm);
 		flexRow.push(tempObj);
 	  }
 }
