@@ -100,6 +100,7 @@ class VisController {
 			data: flexTable
 		},
 		options: {
+      showAggregationLabels: false,
 			grid: {
 				showGrandTotals: this.showGrandTotals
 			}
