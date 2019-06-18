@@ -4,19 +4,29 @@
  <div class="sidebar-item-title visEditorAggGroup__title">
 		   <label>
 				Totals
-			  </label>	
+			  </label>
 		</div>
  <div class="checkbox">
 		   <label>
 	          <input type="checkbox" ng-model="vis.params.tColumnChecked"  ng-change="vis.updateState()" >Show column total
-		  </label>	  
+		  </label>
 		</div>
  <div class="checkbox">
 		   <label>
 				<input  type="checkbox" ng-model="vis.params.tRowChecked"  ng-change="vis.updateState()">Show row total
-			  </label>	
-		</div>		
+			  </label>
+		</div>
 
 </div>
-</div>
 
+
+<div class="sidebar-item visEditorAggGroup__wrapper">
+  <div class="sidebar-item-title visEditorAggGroup__title">
+
+       <label>
+        Decimal Places
+        </label>
+    </div>
+    <input name="size" ng-model="vis.params.decimalSize" min="0" ng-change="vis.updateState()" type="number" ng-value="2">
+</div>
+</div>
