@@ -13,54 +13,54 @@ class VisController {
     this.container.className = 'myvis-container-div';
 	this.container.style = "width:100%;";
     this.el.appendChild(this.container);
-	
-	
+    //this.vis.params.decimalSize = "2";
 	if ( ! this.vis.getUiState()._mergedState.showGrandTotals) {
 		this.vis.params.tColumnChecked = true;
 	    this.vis.params.tRowChecked = true;
 	}
-	
+
   }
 
   destroy() {
     this.el.innerHTML = '';
   }
-  
+
 
   render(visData, status) {
     this.container.innerHTML = '';
     //console.log(visData);
 
-    
-	
+
+
     var columnsId =[];
     var columnsName =[];
     var flexTable = [];
-	var flexRow = [{ uniqueName: "[Measures]" }];
-	var flexColumn = [];
-	var flexMeasures = [];
-    
-	
+	  var flexRow = [{ uniqueName: "[Measures]" }];
+	  var flexColumn = [];
+	  var flexMeasures = [];
+
+
 	var tColumnChecked = this.vis.params.tColumnChecked;
 	var tRowChecked = this.vis.params.tRowChecked;
+  var decimalPlaces = this.vis.params.decimalSize;
 	this.showGrandTotals = (tColumnChecked && tRowChecked)?"true":(tColumnChecked?"columns":(tRowChecked?"rows":"false"));
 	this.vis.uiStateVal("showGrandTotals", this.showGrandTotals);
-	//console.log(tColumnChecked)
+	//console.log(decimalPlaces)
 	//console.log(tRowChecked)
 	//console.log(showGrandTotals)
 
-	
-	
+
+
 
     for (var i = 0; i < visData["columns"].length; i++) {
 	  var clm = visData["columns"][i]
-	  
+
 	  var clmName = getColumnName(clm);
 	  if (clmName){
 	    columnsId.push(clm["id"]);
 	    columnsName.push(clmName);
 	  }
-	
+
 	  addMetrics(clm, flexMeasures);
 	  addTerms(clm, flexColumn, flexRow);
     }
@@ -110,7 +110,8 @@ class VisController {
 				name: "",
 				thousandsSeparator: ".",
 				decimalSeparator: ",",
-				maxDecimalPlaces: 2
+				//maxDecimalPlaces: 0,
+        decimalPlaces: decimalPlaces
 			}
 		],
 	    slice: {
@@ -124,7 +125,7 @@ class VisController {
 	// render flexmonster pivot table
 	if (flexColumn.length > 0 || flexRow.length > 1) { // flexRow.0 holds [Measures] ,  skip that
 		ReactDOM.render(
-			<FlexmonsterReact.Pivot width="100%"   componentFolder="https://cdn.flexmonster.com/"  report={report} />, 
+			<FlexmonsterReact.Pivot width="100%"   componentFolder="https://cdn.flexmonster.com/"  report={report} />,
 			//<FlexmonsterReact.Pivot width="100%"   report={report} licenseKey="Z71P-XAB43Y-0F680Y-6O4F3E" />,
 			document.getElementById(output)
 		);
